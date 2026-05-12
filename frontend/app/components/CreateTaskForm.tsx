@@ -1,15 +1,14 @@
 'use client';
+
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function CreateTaskForm() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const router = useRouter();
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
-        console.log("Submitting...");
-
-
         await fetch(`http://localhost:5000/tasks`, {
             method: "POST",
             headers: {
@@ -20,6 +19,7 @@ export default function CreateTaskForm() {
                 description
             })
         });
+        router.refresh();
     }
     return (
         <form onSubmit={handleSubmit}>
