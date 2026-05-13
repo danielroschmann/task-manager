@@ -40,3 +40,22 @@ export async function removeTask(id: number) {
         }
     });
 }
+
+export async function getUncompletedTasks() {
+    const tasks = await prisma.task.findMany({
+        where: {
+            completed: false,
+        },
+    });
+    return tasks;
+}
+
+export async function getTaskStats() {
+    const total = await prisma.task.count();
+    const completed = await prisma.task.count({
+        where: {
+            completed: true,
+        },
+    });
+    return { total, completed };
+}

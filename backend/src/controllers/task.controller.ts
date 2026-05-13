@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createTask, getTasks, getTask, toggleTask, removeTask  } from "../services/task.service.js";
+import { createTask, getTasks, getTask, toggleTask, removeTask, getUncompletedTasks, getTaskStats  } from "../services/task.service.js";
 import { prioritizeTasks } from "../services/ai.service.js";
 
 export async function createTaskController(req: Request, res: Response) {
@@ -33,10 +33,17 @@ export async function removeTaskController(req: Request, res: Response) {
 }
 
 export async function prioritizeTasksController(req: Request, res: Response) {
-    const result = await prioritizeTasks([
-        "Finish database assignment",
-        "Buy groceries",
-        "Study TypeScript",
-    ]);
+    const uncompletedTasks = await getUncompletedTasks();
+
+    const taskTitles = uncompletedTasks.map(
+        (task) => task.title
+        );
+
+    const result = await prioritizeTasks(taskTitles);
     res.status(200).json(result);
+}
+
+export async function getTaskStatsController(req: Request, res: Response) {
+    const stats = await getTaskStats();
+    res.status(200).json(stats);
 }
