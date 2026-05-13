@@ -1,8 +1,12 @@
+import Dashboard from "./components/Dashboard";
+
 export default function Home() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Task Manager</h1>
-      <p>Welcome to the task manager application.</p>
+    <div>
+      <h1 className="text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
+      <p className="text-gray-600 mb-8">Plan, prioritize and accomplish your task with ease</p>
+
+      <Dashboard />
     </div>
   );
 }

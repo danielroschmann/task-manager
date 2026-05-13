@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Sidebar from "./components/Sidebar";
 
 export const metadata: Metadata = {
   title: "Task Manager",
-  description: "A simple task management application",
+  description: "Simple task management application",
 };
 
 export default function RootLayout({
@@ -13,7 +14,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-gray-50">{children}</body>
+      <body className="bg-gray-50">
+        <div className="flex min-h-screen">
+          <Sidebar />
+          <main className="flex-1 p-8">
+            {children}
+          </main>
+        </div>
+      </body>
     </html>
   );
 }
