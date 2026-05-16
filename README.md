@@ -159,12 +159,6 @@ http://localhost:5000
 
 Create a PostgreSQL database and configure your environment variables.
 
-Example:
-
-```env
-DATABASE_URL="postgresql://username:password@localhost:5432/task_manager"
-```
-
 Run migrations:
 
 ```bash
