@@ -103,13 +103,34 @@ export default function Dashboard() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <button
-                        onClick={handlePrioritize}
-                        disabled={loadingAI || stats.total === 0}
-                        className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-                    >
-                        {loadingAI ? 'Prioritizing...' : 'AI Prioritize'}
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={handlePrioritize}
+                            disabled={loadingAI || stats.total === 0}
+                            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                        >
+                            {loadingAI ? 'Prioritizing...' : 'AI Prioritize'}
+                        </button>
+                        <div className="relative group">
+                            <svg
+                                className="w-5 h-5 text-gray-400 cursor-help"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            <div className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-64 p-3 bg-gray-900 text-white text-sm rounded-lg shadow-lg z-10">
+                                <p>If you have many tasks and are unsure how to prioritize them, let AI analyze and suggest the best order to tackle them.</p>
+                                <div className="absolute top-full right-4 -mt-1 border-4 border-transparent border-t-gray-900"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {aiPrioritization && (
