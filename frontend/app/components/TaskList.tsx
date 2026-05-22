@@ -1,7 +1,8 @@
 import TaskItem from "./TaskItem";
 
 async function getTasks() {
-    const data = await fetch('http://localhost:5000/tasks', {
+    const apiUrl = 'http://backend:5000';
+    const data = await fetch(`${apiUrl}/tasks`, {
         cache: 'no-store'
     });
     const tasks = await data.json();
