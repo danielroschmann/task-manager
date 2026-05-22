@@ -8,7 +8,8 @@ export default function TaskItem({task}: any) {
 
     async function toggleTask() {
         setIsToggling(true);
-        await fetch(`http://localhost:5000/tasks/${task.id}`, {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        await fetch(`${apiUrl}/tasks/${task.id}`, {
             method: "PATCH"
         });
         router.refresh();
@@ -16,7 +17,8 @@ export default function TaskItem({task}: any) {
     }
 
     async function removeTask() {
-        await fetch(`http://localhost:5000/tasks/${task.id}`, {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        await fetch(`${apiUrl}/tasks/${task.id}`, {
             method: "DELETE"
         });
         router.refresh();

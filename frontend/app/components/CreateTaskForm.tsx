@@ -14,7 +14,8 @@ export default function CreateTaskForm() {
         if (!title.trim()) return;
 
         setIsSubmitting(true);
-        await fetch(`http://localhost:5000/tasks`, {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        await fetch(`${apiUrl}/tasks`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

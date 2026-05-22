@@ -29,9 +29,10 @@ export default function Dashboard() {
 
     async function fetchData() {
         try {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
             const [tasksRes, statsRes] = await Promise.all([
-                fetch('http://localhost:5000/tasks', { cache: 'no-store' }),
-                fetch('http://localhost:5000/tasks/stats', { cache: 'no-store' })
+                fetch(`${apiUrl}/tasks`, { cache: 'no-store' }),
+                fetch(`${apiUrl}/tasks/stats`, { cache: 'no-store' })
             ]);
 
             const tasksData = await tasksRes.json();
@@ -54,7 +55,8 @@ export default function Dashboard() {
     async function handlePrioritize() {
         setLoadingAI(true);
         try {
-            const response = await fetch('http://localhost:5000/tasks/prioritizetasks', {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+            const response = await fetch(`${apiUrl}/tasks/prioritizetasks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
