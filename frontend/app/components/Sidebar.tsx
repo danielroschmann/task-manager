@@ -9,7 +9,7 @@ export default function Sidebar() {
         { name: "Dashboard", path: "/", icon: "📊" },
         { name: "Tasks", path: "/tasks", icon: "✓" },
         { name: "Electricity Prices", path: "/electricity-prices", icon: "⚡" },
-        { name: "Calendar", path: "/calendar", icon: ""}
+        { name: "Calendar", path: "/calendar", icon: "📅"}
     ];
 
     return (

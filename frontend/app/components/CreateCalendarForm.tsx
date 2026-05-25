@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function CreateCalendarForm() {
   const [ name, setName ] = useState("");
+  const [ isMain, setIsMain ] = useState(false);
   const router = useRouter();
   const [ isSubmitting, setIsSubmitting ] = useState(false);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -19,10 +20,12 @@ export default function CreateCalendarForm() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name
+        name,
+        isMain
       })
     });
     setName("");
+    setIsMain(false);
     setIsSubmitting(false);
     router.refresh();
   }
@@ -38,6 +41,20 @@ export default function CreateCalendarForm() {
           disabled={isSubmitting}
         />
 
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="isMain"
+            checked={isMain}
+            onChange={(e) => setIsMain(e.target.checked)}
+            disabled={isSubmitting}
+            className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+          />
+          <label htmlFor="isMain" className="text-sm text-gray-700">
+            Set as main calendar
+          </label>
+        </div>
+
         <div className="flex justify-end">
           <button
             type="submit"
@@ -48,6 +65,6 @@ export default function CreateCalendarForm() {
            </button>
         </div>
       </div>
-    </form>          
+    </form>
   );
 }

@@ -18,6 +18,7 @@ model Task {
 model Calender  {
   id Int @id @default(autoincrement())
   name String
+  isMain Boolean @default(false)
   createdAt DateTime @default(now())
 
   events Event[]
