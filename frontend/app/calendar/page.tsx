@@ -1,4 +1,4 @@
-
+import CreateCalendarForm from "../components/CreateCalendarForm";
 
 export default function CalendarPage() {
   return (
@@ -7,6 +7,7 @@ export default function CalendarPage() {
       <p className="text-gray-600 mb-8">Manage your calendar</p>
 
       <div className="bg-white rounded-lg shadow p-6">
+        <CreateCalendarForm />
       </div>
     </div>
   )
