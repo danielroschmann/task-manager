@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from "react";
+import CreateEventModal from "./CreateEventModal";
+import EventDetailsModal from "./EventDetailsModal";
 
 type Event = {
   id: number;
@@ -14,10 +16,26 @@ type Event = {
 type CalendarViewProps = {
   events: Event[];
   viewMode: 'week' | 'month';
+  calendarId: number;
+  onEventCreated: () => void;
 };
 
-export default function CalendarView({ events, viewMode }: CalendarViewProps) {
+export default function CalendarView({ events, viewMode, calendarId, onEventCreated }: CalendarViewProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  const handleCreateEvent = (date: Date) => {
+    setSelectedDate(date);
+    setIsCreateModalOpen(true);
+  };
+
+  const handleEventClick = (event: Event) => {
+    setSelectedEvent(event);
+    setIsDetailsModalOpen(true);
+  };
 
   const goToPrevious = () => {
     const newDate = new Date(currentDate);
@@ -124,17 +142,27 @@ export default function CalendarView({ events, viewMode }: CalendarViewProps) {
           return (
             <div
               key={idx}
-              className={`bg-white p-2 min-h-[120px] ${isToday(date) ? 'bg-blue-50' : ''}`}
+              className={`bg-white p-2 min-h-[120px] relative ${isToday(date) ? 'bg-blue-50' : ''}`}
             >
-              {dayEvents.map(event => (
-                <div
-                  key={event.id}
-                  className="bg-green-100 border-l-4 border-green-600 p-1 mb-1 text-xs rounded"
-                >
-                  <div className="font-semibold truncate">{event.title}</div>
-                  <div className="text-gray-600 truncate">{new Date(event.startDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</div>
-                </div>
-              ))}
+              <button
+                onClick={() => handleCreateEvent(date)}
+                className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-green-600 hover:bg-green-50 rounded transition-colors text-xl font-bold"
+                title="Create event"
+              >
+                +
+              </button>
+              <div className="mt-6">
+                {dayEvents.map(event => (
+                  <div
+                    key={event.id}
+                    onClick={() => handleEventClick(event)}
+                    className="bg-green-100 border-l-4 border-green-600 p-1 mb-1 text-xs rounded cursor-pointer hover:bg-green-200 transition-colors"
+                  >
+                    <div className="font-semibold truncate">{event.title}</div>
+                    <div className="text-gray-600 truncate">{new Date(event.startDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           );
         })}
@@ -158,13 +186,23 @@ export default function CalendarView({ events, viewMode }: CalendarViewProps) {
           return (
             <div
               key={idx}
-              className={`bg-white p-2 min-h-[100px] ${isToday(date) ? 'bg-blue-50' : ''} ${!isCurrentMonth(date) ? 'text-gray-400' : ''}`}
+              className={`bg-white p-2 min-h-[100px] relative ${isToday(date) ? 'bg-blue-50' : ''} ${!isCurrentMonth(date) ? 'text-gray-400' : ''}`}
             >
-              <div className="font-semibold text-sm mb-1">{date.getDate()}</div>
+              <div className="flex items-start justify-between mb-1">
+                <div className="font-semibold text-sm">{date.getDate()}</div>
+                <button
+                  onClick={() => handleCreateEvent(date)}
+                  className="w-5 h-5 flex items-center justify-center text-green-600 hover:bg-green-50 rounded transition-colors text-lg font-bold"
+                  title="Create event"
+                >
+                  +
+                </button>
+              </div>
               {dayEvents.slice(0, 3).map(event => (
                 <div
                   key={event.id}
-                  className="bg-green-100 border-l-2 border-green-600 p-1 mb-1 text-xs rounded truncate"
+                  onClick={() => handleEventClick(event)}
+                  className="bg-green-100 border-l-2 border-green-600 p-1 mb-1 text-xs rounded truncate cursor-pointer hover:bg-green-200 transition-colors"
                 >
                   {event.title}
                 </div>
@@ -206,6 +244,25 @@ export default function CalendarView({ events, viewMode }: CalendarViewProps) {
       </div>
 
       {viewMode === 'week' ? renderWeekView() : renderMonthView()}
+
+      {selectedDate && (
+        <CreateEventModal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+          selectedDate={selectedDate}
+          calendarId={calendarId}
+          onEventCreated={() => {
+            onEventCreated();
+            setIsCreateModalOpen(false);
+          }}
+        />
+      )}
+
+      <EventDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        event={selectedEvent}
+      />
     </div>
   );
 }

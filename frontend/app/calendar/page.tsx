@@ -151,7 +151,12 @@ export default function CalendarPage() {
         </div>
 
         {selectedCalendarId && (
-          <CalendarView events={events} viewMode={viewMode} />
+          <CalendarView
+            events={events}
+            viewMode={viewMode}
+            calendarId={selectedCalendarId}
+            onEventCreated={() => fetchEvents(selectedCalendarId)}
+          />
         )}
       </div>
     </div>
