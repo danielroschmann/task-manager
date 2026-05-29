@@ -1,13 +1,14 @@
 import prisma from "../config/prisma.js"
 
-export async function createEvent(title: string, description: string, startDate: Date, endDate: Date, calenderId: number) {
+export async function createEvent(title: string, description: string, startDate: Date, endDate: Date, calenderId: number, userId: number) {
   return await prisma.event.create({
     data: {
       title,
       description,
       startDate,
       endDate,
-      calenderId
+      calenderId,
+      userId
     }
   });
 }

@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { createEvent, getEvent, getEventsFromCalendar  } from "../services/event.service.js";
 
 export async function createEventController(req: Request, res: Response) {
-  const { title, description, startDate, endDate, calenderId } = req.body;
-  const event = await createEvent(title, description, startDate, endDate, calenderId);
+  const { title, description, startDate, endDate, calenderId, userId } = req.body;
+  const event = await createEvent(title, description, startDate, endDate, calenderId, userId);
   return res.status(201).json(event);
 }
 

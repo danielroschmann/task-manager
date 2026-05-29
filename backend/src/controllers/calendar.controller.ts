@@ -2,8 +2,8 @@ import { createCalendar, getCalendar, getAllCalendars, getMainCalendar, setMainC
 import { Request, Response } from "express";
 
 export async function createCalendarController(req: Request, res: Response) {
-  const { name, isMain } = req.body;
-  const calendar = await createCalendar(name, isMain);
+  const { name, isMain, userId } = req.body;
+  const calendar = await createCalendar(name, userId, isMain);
   return res.status(201).json(calendar);
 }
 

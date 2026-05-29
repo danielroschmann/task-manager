@@ -3,8 +3,8 @@ import { createTask, getTasks, getTask, toggleTask, removeTask, getUncompletedTa
 import { prioritizeTasks } from "../services/ai.service.js";
 
 export async function createTaskController(req: Request, res: Response) {
-    const { title, description } = req.body;
-    const task = await createTask(title, description);
+    const { title, description, userId } = req.body;
+    const task = await createTask(title, description, userId);
     res.status(201).json(task);
 }
 

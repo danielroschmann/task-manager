@@ -12,11 +12,12 @@ export async function getTask(id : number) {
     });
 }
 
-export async function createTask(title: string, description: string) {
+export async function createTask(title: string, description: string, userId: number) {
     return await prisma.task.create({
         data: {
             title,
-            description
+            description,
+            userId
         }
     });
 }

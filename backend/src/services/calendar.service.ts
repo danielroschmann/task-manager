@@ -1,8 +1,11 @@
 import prisma from "../config/prisma.js";
 
-export async function createCalendar(name: string, isMain: boolean = false) {
+export async function createCalendar(name: string, userId: number, isMain: boolean = false) {
   if (isMain) {
     await prisma.calender.updateMany({
+      where: {
+        userId
+      },
       data: {
         isMain: false
       }
@@ -12,6 +15,7 @@ export async function createCalendar(name: string, isMain: boolean = false) {
   return await prisma.calender.create({
     data: {
       name,
+      userId,
       isMain
     }
   });

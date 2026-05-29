@@ -22,9 +22,11 @@ services:
       - /app/node_modules
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/task_manager
+      OLLAMA_HOST: ${OLLAMA_HOST:-http://ollama:11434}
     depends_on:
       - db
-      - ollama
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   db:
     image: postgres:17
@@ -39,3 +41,5 @@ services:
     image: ollama/ollama
     ports:
       - "11434:11434"
+    profiles:
+      - ollama
